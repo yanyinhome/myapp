@@ -42,10 +42,10 @@ app.web3.eth.getAccounts((err,result)=>{
 
 // 获取区块信息并赋值给config
 const qukuaiarry=[];
-let nowblock=app.getblockNumber();
+let nowblock=app.web3.eth.blockNumber;
 for(let i=nowblock;i>nowblock-10;i--){
     let qukuaimessage={};
-    let qukuai=app.getblock(i);
+    let qukuai=app.web3.eth.getBlock(i);
     qukuaimessage.qukuainumber=qukuai.number;
     qukuaimessage.qukuaiower=qukuai.miner;
     qukuaimessage.gasused=qukuai.gasUsed;
