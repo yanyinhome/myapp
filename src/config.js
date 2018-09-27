@@ -3,16 +3,30 @@ import block from './img/block.png';
 import copy from './img/copy.png';
 import log from './img/log.png';
 import app from './myseltComponent/app1';
+console.log(app.web3)
 // 获取节点信息赋值给config
 const nodemessage={};
-app.getblockNumber(err=>{if(err){console.log(err)}});
-nodemessage.GasPrice=app.getGasPrice();
-// nodemessage.peers=app.getPeers();
+nodemessage.blockNumber=app.web3.eth.blockNumber;
+nodemessage.GasPrice=app.web3.eth.gasPrice.toString();
+nodemessage.peers=app.web3.net.peerCount;
 nodemessage.networkId=app.getNetWorkId();
 nodemessage.minerStatus=app.getMinerStatus();
 nodemessage.provider=app.getHttpProvider();
 // 获取账户信息赋值给config
 const accountsmessage=[];
+app.web3.eth.getAccounts((err,result)=>{
+  if(err){console.log(err)}
+    else{result.forEach(
+        (item)=>{
+          const accountsmessageitem={};
+          accountsmessageitem.id=item;
+          accountsmessageitem.accountaddress=item;
+          accountsmessageitem.accountnumber=app.web3.eth.getBalance(item).toString();
+          accountsmessageitem.lockd=true;
+          accountsmessage.push(accountsmessageitem);
+      }
+    )}
+})
 // app.getaccounts().then(accounts=>{
 //   accounts.forEach((element,index) => {
 //     let message={};
@@ -46,7 +60,7 @@ const Config={
         {id:2,value:"汇金币",img:block,link:"./qukuai"},
         {id:3,value:"币币交易",img:copy,link:"./jiaoyi"},
         {id:4,value:"日志",img:log,link:"./rizhi"},
-        {id:5,value:"代币",img:log,link:"./token"},
+        // {id:5,value:"代币",img:log,link:"./token"},
         ],
         // head下内容显示列表
     BodyTitle_arry:[
@@ -72,10 +86,11 @@ const Config={
         },
     },
     // 账户列表
-    accounts:accountsmessage||[{
+    accounts:accountsmessage.length===0?accountsmessage:[{
         id:1,
         accountaddress:"0",
-        accountnumber:"0"
+        accountnumber:"0",
+        lockd:true,
     },], 
     // 区块列表信息
     qukuailist:qukuaiarry||[{

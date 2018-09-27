@@ -73,6 +73,17 @@ class Homebody extends Component{
             accountarry:config.accounts,            
         }
     }
+    componentDidMount(){
+        this.timer=setInterval(
+            ()=>{
+                this.setState={
+                    titlearry:config.BodyTitle_arry,
+                    accountarry:config.accounts,
+            }},1000)
+    }
+    componentWillUnmount(){
+        clearInterval(this.timer)
+    }
     render(){
         return(
             <div>
