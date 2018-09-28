@@ -1,13 +1,13 @@
 /* 头部 */
-.top{height: 56px;background: #181b2a;color: #c7cce6;;line-height: 56px;font-size: 0px}
-.top .title{float: left;margin-left: 50px;font-size: 28px;background: #ccc;text-align: center}
+.top{height: 64px;background: #07123f;color: #c7cce6;;line-height: 64px;font-size: 0px}
+.top .title{float: left;margin-left: 50px;font-size: 28px;text-align: center}
 .top .title img{width: 70%;height: 70%}
 .top .container .left{float: left;}
 .top .container .right{float:right;}
 .top .container .left ul {float: left;color:#c7cce6;margin-bottom: 0;}
 .top .container .left ul li{float: left;}
 .top .container .left ul li img{width: 18px;height:18px;cursor: pointer;}
-.top .container .left ul li a{color: #c7cce6;display: inline-block;margin-left: 10px;font-size: 14px;vertical-align: middle;margin-right: 36px;}
+.top .container .left ul li a{color: #c7cce6;display: inline-block;margin-left: 10px;font-size: 16px;vertical-align: middle;margin-right: 36px;}
 .top .container .left ul .active a{color:#7a98f7; }
 .top .container .left ul li a:hover{color: #7a98f7;text-decoration: none;}
 .top .container .right input{width: 250px;height: 25px;border-radius: 16px;background: url(../img/search.png) 225px center/16px 16px no-repeat;padding-left: 20px;outline: none;border: 1px solid #fff;color: #fff;}
