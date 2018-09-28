@@ -17,7 +17,7 @@ class BodyTitle extends Component{
         return(
             <div className="body_title">
                <div className="container">
-               <ul>
+               <ul style={{marginBottom:0}}>
                 {itemlist}
                 </ul>
                </div>
