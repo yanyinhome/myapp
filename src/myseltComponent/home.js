@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import './bodycontent.css';
 import './home.css';
 import config from "../config";
-import {Button} from "element-react";
+import {TableList} from "./publicConponent";
 // import "element-them-default";
 // 账户列表的标题，显示节点信息
 class BodyTitle extends Component{
@@ -39,8 +39,9 @@ class BodyContent extends Component{
         return(
             <div className="container">
                 <Welcome/>
-                <div>                   
-                    <BodyFoot accountarry={this.props.accountarry}/>   
+                <div> 
+                    <BodyFoot accountarry={this.props.accountarry}/>
+                    <TableList/>   
                 </div>
             </div>
         )
