@@ -78,7 +78,8 @@ class ETHbuy extends Component{
       }
       
       onChange(key, value) {
-        this.state.form[key] = value;
+        this.setState({form:{key:value}});
+        // this.state.form[key] = value;
         this.forceUpdate();
       }
       
@@ -133,7 +134,7 @@ class ETHbuy extends Component{
 class Tabslist extends Component{
     render() {
         return (
-          <Tabs activeName="3" onTabClick={ (tab) => console.log(tab.props.name) }>
+          <Tabs activeName="1" onTabClick={ (tab) => console.log(tab.props.name) }>
             <Tabs.Pane label="查看账户" name="1">
             <TableList data={this.props.data} columns={this.props.columns}/>
             </Tabs.Pane>
@@ -174,23 +175,23 @@ class BodyContent extends Component{
     }
 }
 // 账户列表底部，接收父组件从数据库获得的信息并显示
-class BodyFoot extends Component{
-    render(){
-        let itemlist=this.props.accountarry.map(item=>(<tr key={item.id}><td>{item.accountaddress}</td><td>{item.accountnumber}</td><td>{item.lockd.toString()}</td></tr>))
-        return(
-            <div className="accounts">
-                <table>
-                    <thead>
-                        <tr><th>账户地址</th><th>代币数</th><th>解锁</th></tr>
-                    </thead>
-                    <tbody>
-                        {itemlist}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
-}
+// class BodyFoot extends Component{
+//     render(){
+//         let itemlist=this.props.accountarry.map(item=>(<tr key={item.id}><td>{item.accountaddress}</td><td>{item.accountnumber}</td><td>{item.lockd.toString()}</td></tr>))
+//         return(
+//             <div className="accounts">
+//                 <table>
+//                     <thead>
+//                         <tr><th>账户地址</th><th>代币数</th><th>解锁</th></tr>
+//                     </thead>
+//                     <tbody>
+//                         {itemlist}
+//                     </tbody>
+//                 </table>
+//             </div>
+//         )
+//     }
+// }
 
 // 组件叠放，对外输出，从数据库获取信息并传递给子组件
 class Homebody extends Component{

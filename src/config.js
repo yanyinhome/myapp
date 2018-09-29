@@ -3,7 +3,7 @@ import block from './img/block.png';
 import copy from './img/copy.png';
 import log from './img/log.png';
 import app from './myseltComponent/app1';
-console.log(app.web3)
+
 // 获取节点信息赋值给config
 const nodemessage={};
 nodemessage.blockNumber=app.web3.eth.blockNumber;
@@ -99,6 +99,8 @@ const Config={
        gasused:"",
        trancenumber:"" 
     }],
+    // 代币信息数组
+    Tokenlist:[],
     // 合约信息,存数据库
     contracts:[
         {   name:null,
@@ -490,4 +492,25 @@ const Config={
         },
     ]
 }
+// 实例化代币合约并导出
+let contract1=Config.contracts[0].abi;
+let address1=Config.contracts[0].address;
+// 实例化代币合约，后期改数组
+const myconstract=app.web3.eth.contract(contract1).at(address1);
+// 初始化代币数据的函数
+const accountsmessageToken=[];
+app.web3.eth.getAccounts((err,result)=>{
+    if(err){console.log(err)}
+      else{result.forEach(
+          (item,index)=>{
+            const accountsmessageitem={};
+            accountsmessageitem.lockd="true";
+            accountsmessageitem.index=`${index+1}`;
+            accountsmessageitem.number=myconstract.balanceOf.call(item).toString();
+            accountsmessageitem.address=item;
+            accountsmessageToken.push(accountsmessageitem);
+        }
+      )}
+      Config.Tokenlist=accountsmessageToken;
+  })
 export default Config;
