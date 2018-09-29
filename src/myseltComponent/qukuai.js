@@ -21,13 +21,45 @@ class QuKuaiListTable extends Component{
         )
     }
 }
+// 汇金币购买函数
+class HuijinBuy extends Component{
+    render(){
+        return(
+            <div>
+                购买汇金币
+            </div>
+        )
+    }
+}
+// 汇金币购买函数
+class HuijinSell extends Component{
+    render(){
+        return(
+            <div>
+                出售汇金币
+            </div>
+        )
+    }
+}
+// 汇金币转账函数
+class HuijinTransction extends Component{
+    render(){
+        return(
+            <div>
+                转账汇金币
+            </div>
+        )
+    }
+}
 class QuKuai extends  Component{
     render(){
         return(
             <div>
                 <Head/>
                 <BodyTitle titlearry={config.BodyTitle_arry}/>
-                <QuKuaiListTable QuKuaiList={config.qukuailist}/>
+                <HuijinBuy/>
+                <HuijinSell/>
+                <HuijinTransction/>
                 <Foot/>
             </div>
         )

@@ -126,6 +126,23 @@ class JiaoYiContent extends Component{
         )
     }
 }
+// 币币交易函数
+// 汇金买以太
+class Hjbeth extends Component{
+    render(){
+        return(
+            <div>汇金币换以太币</div>
+        )
+    }
+}
+// 以太买汇金
+class Ethhjb extends Component{
+    render(){
+        return(
+            <div>以太换汇金</div>
+        )
+    }
+}
 // 输出的交易页面
 class JiaoYi extends  Component{
     render(){
@@ -133,7 +150,9 @@ class JiaoYi extends  Component{
             <div>
                 <Head/>
                 <BodyTitle titlearry={config.BodyTitle_arry}/>
-                <JiaoYiContent/>
+                {/* <JiaoYiContent/> */}
+                <Ethhjb/>
+                <Hjbeth/>
                 <Foot/>
             </div>
         )

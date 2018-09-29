@@ -3,7 +3,8 @@ import React,{Component} from 'react';
 import './bodycontent.css';
 import './home.css';
 import config from "../config";
-import{Button,Icon,Tag,Table,Tabs,Pagination} from "element-react";
+import{Button,Tag,Table,Tabs,Pagination} from "element-react";
+import "element-theme-default";
 import app from './app1';
 // import "element-them-default";
 // 账户列表的标题，显示节点信息
@@ -43,7 +44,7 @@ class TableList extends Component{
           columns={this.props.columns}
           data={this.props.data}
           border={true}
-          height={440}
+          height={this.props.height}
           highlightCurrentRow={true}
           onCurrentChange={item=>{console.log(item)}}
           stripe={true}
@@ -61,7 +62,7 @@ class Tabslist extends Component{
             <TableList data={this.props.data} columns={this.props.columns}/>
             </Tabs.Pane>
             <Tabs.Pane label="查看区块" name="2">
-            <TableList data={this.props.data_qukuai} columns={this.props.columns_qukuai}/>
+            <TableList data={this.props.data_qukuai} columns={this.props.columns_qukuai} height={550}/>
             <Fenye/>
             </Tabs.Pane>
             <Tabs.Pane label="以太币交易" name="3">
@@ -75,9 +76,9 @@ class Tabslist extends Component{
 class Fenye extends Component{
     render() {
         return (
-          <div className="last">
-            <div className="block">
-              <Pagination layout="total, sizes, prev, pager, next, jumper" total={400} pageSizes={[100, 200, 300, 400]} pageSize={100} currentPage={5}/>
+          <div className="last" style={{float:"right",marginTop:10}}>
+            <div className="block ">
+              <Pagination layout="prev, pager, next, jumper" total={4000} pageSize={50} currentPage={1} onCurrentChange={size=>console.log(size)}/>
             </div>
           </div>
         )
@@ -173,7 +174,13 @@ class Homebody extends Component{
                   prop: "number",
                   width: "400rem",
                   align:"center",
-                 
+                    render:function(data){
+                        return(
+                            <span>
+                            <Tag type="primary">{data.number}</Tag>
+                            </span>
+                        )
+                    }
                 },
                 {
                   label: "锁定/解锁",
@@ -213,7 +220,7 @@ class Homebody extends Component{
         }
     componentDidMount(){
         this.timer=setInterval(
-            ()=>this.tick(),2000
+            ()=>this.tick(),30000
         )
     }
     componentWillUnmount(){
