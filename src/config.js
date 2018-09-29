@@ -17,12 +17,15 @@ const accountsmessage=[];
 app.web3.eth.getAccounts((err,result)=>{
   if(err){console.log(err)}
     else{result.forEach(
-        (item)=>{
+        (item,index)=>{
           const accountsmessageitem={};
           accountsmessageitem.id=item;
           accountsmessageitem.accountaddress=item;
           accountsmessageitem.accountnumber=app.web3.eth.getBalance(item).toString();
-          accountsmessageitem.lockd=true;
+          accountsmessageitem.lockd="true";
+          accountsmessageitem.index=`${index+1}`;
+          accountsmessageitem.number=app.web3.eth.getBalance(item).toString();
+          accountsmessageitem.address=item;
           accountsmessage.push(accountsmessageitem);
       }
     )}

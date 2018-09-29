@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import './bodycontent.css';
 import './home.css';
 import config from "../config";
-import {TableList} from "./publicConponent";
+import{Button,Icon,Tag,Table} from "element-react";
 // import "element-them-default";
 // 账户列表的标题，显示节点信息
 class BodyTitle extends Component{
@@ -33,6 +33,24 @@ class Welcome extends Component{
         )
     }
 }
+// elementui table组件
+class TableList extends Component{      
+    render() {
+      return (
+        <Table
+          style={{width: '100%'}}
+          columns={this.props.columns}
+          data={this.props.data}
+          border={true}
+          height={250}
+          highlightCurrentRow={true}
+          onCurrentChange={item=>{console.log(item)}}
+          stripe={true}
+        />
+      )
+    }
+    
+}
 //账户列表头部
 class BodyContent extends Component{
     render(){
@@ -40,8 +58,7 @@ class BodyContent extends Component{
             <div className="container">
                 <Welcome/>
                 <div> 
-                    <BodyFoot accountarry={this.props.accountarry}/>
-                    <TableList/>   
+                    <TableList data={this.props.data} columns={this.props.columns}/>   
                 </div>
             </div>
         )
@@ -65,13 +82,62 @@ class BodyFoot extends Component{
         )
     }
 }
+
 // 组件叠放，对外输出，从数据库获取信息并传递给子组件
 class Homebody extends Component{
     constructor(props){
         super(props);
         this.state={
             titlearry:config.BodyTitle_arry,
-            accountarry:config.accounts,            
+            accountarry:config.accounts,
+            columns: [{
+                label:"账户",
+                className:"index",
+                width:"70rem",
+                align:"center",
+                render: function(data){
+                    return (                   
+                      <span style={{display:"inline-block",width:"100%"}}>{data.index}</span>
+                    )
+                  }
+            },
+                {
+                  label: "账户地址",
+                  prop: "address",
+                  width: "470rem",
+                  align:"center",
+                  render: function(data){
+                    return (                   
+                      <span style={{width:"100%"}}>{data.address}</span>
+                    )
+                  }
+                },
+                {
+                  label: "以太币",
+                  prop: "number",
+                  width: "400rem",
+                  align:"center",
+                  render: function(data){
+                    return <Tag style={{width:"100%"}} type="primary">{data.number}</Tag>
+                  }
+                },
+                {
+                  label: "锁定/解锁",
+                  prop: "locked",
+                  align:"center",
+                  minwidth:"80rem",
+                  render: function(){
+                    return (
+                      <span>
+                       <Button plain={true} type="info" size="small">锁定</Button>
+                       <Button type="warning" size="small">解锁</Button>
+                      </span>
+                    )
+                  }
+                }
+              ],
+            data:config.accounts,
+               highlightCurrentRow:"ture",           
         }
     }
     componentDidMount(){
@@ -80,6 +146,7 @@ class Homebody extends Component{
                 this.setState={
                     titlearry:config.BodyTitle_arry,
                     accountarry:config.accounts,
+                    data:[],
             }},1000)
     }
     componentWillUnmount(){
@@ -89,7 +156,7 @@ class Homebody extends Component{
         return(
             <div>
                 <BodyTitle titlearry={this.state.titlearry}/>
-                <BodyContent accountarry={this.state.accountarry}/>
+                <BodyContent accountarry={this.state.accountarry} data={this.state.data} columns={this.state.columns}/>
             </div>
         )
     }
