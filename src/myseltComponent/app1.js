@@ -14,7 +14,7 @@ if (typeof web3 !== 'undefined') {
 // 连接到以太坊节点
 // web3.setProvider(new web3.providers.HttpProvider("http://192.168.124.2:8486"));
 // 测试WEB3是否引入
-var ab=web3.eth.getAccounts((err)=>{if(err){console.log(err)}})
+// var ab=web3.eth.getAccounts((err)=>{if(err){console.log(err)}})
 console.log(web3.eth);
 let version=web3.version;
 const app={

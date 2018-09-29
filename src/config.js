@@ -17,12 +17,12 @@ const accountsmessage=[];
 app.web3.eth.getAccounts((err,result)=>{
   if(err){console.log(err)}
     else{result.forEach(
-        (item)=>{
+        (item,index)=>{
           const accountsmessageitem={};
-          accountsmessageitem.id=item;
-          accountsmessageitem.accountaddress=item;
-          accountsmessageitem.accountnumber=app.web3.eth.getBalance(item).toString();
-          accountsmessageitem.lockd=true;
+          accountsmessageitem.lockd="true";
+          accountsmessageitem.index=`${index+1}`;
+          accountsmessageitem.number=app.web3.eth.getBalance(item).toString();
+          accountsmessageitem.address=item;
           accountsmessage.push(accountsmessageitem);
       }
     )}
@@ -48,8 +48,8 @@ for(let i=nowblock;i>nowblock-10;i--){
     let qukuai=app.web3.eth.getBlock(i);
     qukuaimessage.qukuainumber=qukuai.number;
     qukuaimessage.qukuaiower=qukuai.miner;
-    qukuaimessage.gasused=qukuai.gasUsed;
-    qukuaimessage.trancenumber=qukuai.transactions.length;
+    qukuaimessage.gasused=qukuai.gasUsed.toString();
+    qukuaimessage.trancenumber=qukuai.transactions.length.toString();
     qukuaiarry.push(qukuaimessage);
 }
 // 配置信息
@@ -96,7 +96,7 @@ const Config={
     qukuailist:qukuaiarry||[{
        qukuainumber:"0",
        qukuaiower:"none",
-       gasUsed:"",
+       gasused:"",
        trancenumber:"" 
     }],
     // 合约信息,存数据库

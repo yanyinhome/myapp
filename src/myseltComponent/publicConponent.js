@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {Link} from 'react-router-dom';
+
+import "element-theme-default";
 // 头部的菜单列表组件
     // 单个列表组件
 class Item extends Component{
@@ -18,4 +20,5 @@ class Itemlist extends Component{
         )
     }
 }
+// 列表组件
 export {Itemlist};
