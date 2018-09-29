@@ -11,3 +11,10 @@
 .top .container .left ul .active a{color:#7a98f7; }
 .top .container .left ul li a:hover{color: #7a98f7;text-decoration: none;}
 .top .container .right a{display: inline-block;margin-left: 20px;}
+.top .right .left .el-input{top: 5px;}
+.top .right .left input{width: 200px}
+.top .fr{margin-right: 50px}
+.top .fr ul li{float: left;}
+.top .fr li a{font-size: 14px;color: #c7cce6;display: inline-block;margin-right: 20px;}
+.top .fr li a:hover{color: #7a98f7;}
+.top .fr li a img{width: 18px;height:18px;}

@@ -3,7 +3,7 @@ import React,{Component} from 'react';
 import './bodycontent.css';
 import './home.css';
 import config from "../config";
-import{Button,Tag,Table,Tabs,Pagination} from "element-react";
+import{Button,Tag,Table,Tabs,Pagination,Form,Input,Select,Switch} from "element-react";
 import "element-theme-default";
 import app from './app1';
 // import "element-them-default";
@@ -53,11 +53,87 @@ class TableList extends Component{
     }
     
 }
+// 以太币交易组件
+// 购买以太币
+class ETHbuy extends Component{
+    constructor(props) {
+        super(props);
+      
+        this.state = {
+          form: {
+            name: '',
+            region: '',
+            date1: null,
+            date2: null,
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: ''
+          }
+        };
+      }
+      
+      onSubmit(e) {
+        e.preventDefault();
+      }
+      
+      onChange(key, value) {
+        this.state.form[key] = value;
+        this.forceUpdate();
+      }
+      
+      render() {
+        return (
+          <Form model={this.state.form} labelWidth="80" onSubmit={this.onSubmit.bind(this)}>
+            <Form.Item>
+                <Tag type="primary">
+                以太币当前价格
+                </Tag>                
+            </Form.Item>
+            <Form.Item label="购买/出售">
+              <Select size="small" value={this.state.form.region} placeholder="请选择交易类型">
+                <Select.Option label="购买" value="shanghai" ></Select.Option>
+                <Select.Option label="出售" value="beijing"></Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="数量">
+              <div style={{width:"300px"}}>
+              <Input size="small" value={this.state.form.name} onChange={this.onChange.bind(this, 'name')}></Input>
+              </div>
+            </Form.Item>
+            <Form.Item label="支付金额">
+              <div style={{width:"300px"}}>
+              <Input size="small" value={this.state.form.name} onChange={this.onChange.bind(this, 'name')}></Input>
+              </div>
+            </Form.Item>
+            <Form.Item label="支付方式">
+              <Select size="small" value={this.state.form.region} placeholder="请选择支付方式">
+                <Select.Option label="微信" value="shanghai"></Select.Option>
+                <Select.Option label="支付宝" value="beijing"></Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="显示密码">
+              <Switch
+                onText="on"
+                offText="off"
+                value={this.state.form.delivery}
+                onChange={this.onChange.bind(this, 'delivery')}
+              />
+            </Form.Item>
+            <Form.Item>
+              <Button size="small" type="primary" nativeType="submit">立即购买</Button>
+              <Button size="small">取消</Button>
+            </Form.Item>
+          </Form>
+        )
+      }
+      
+}
 // element tabs组件
 class Tabslist extends Component{
     render() {
         return (
-          <Tabs activeName="2" onTabClick={ (tab) => console.log(tab.props.name) }>
+          <Tabs activeName="3" onTabClick={ (tab) => console.log(tab.props.name) }>
             <Tabs.Pane label="查看账户" name="1">
             <TableList data={this.props.data} columns={this.props.columns}/>
             </Tabs.Pane>
@@ -66,7 +142,7 @@ class Tabslist extends Component{
             <Fenye/>
             </Tabs.Pane>
             <Tabs.Pane label="以太币交易" name="3">
-            以太币交易
+            <ETHbuy/>
             </Tabs.Pane>
           </Tabs>
         )
