@@ -114,12 +114,11 @@ class ETHbuy extends Component{
               </Select>
             </Form.Item>
             <Form.Item label="显示密码">
-              <Switch
-                onText="on"
-                offText="off"
-                value={this.state.form.delivery}
-                onChange={this.onChange.bind(this, 'delivery')}
-              />
+                <Switch
+                value={false}
+                onColor="#ff4949"
+                offColor="#20A0FF">
+            </Switch>
             </Form.Item>
             <Form.Item>
               <Button size="small" type="primary" nativeType="submit">立即购买</Button>

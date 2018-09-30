@@ -81,7 +81,7 @@ const Config={
             jiaoyi:{path:"/jiaoyi",url:"./jiaoyi"},
             rizhi:{path:"/rizhi",url:"./rizhi"},
             qukuai:{path:"/qukuai",url:"./qukuai"},//可以添加正则
-            token:{path:"/token",url:"./token"},
+            admin:{path:"/admin",url:"./admin"},
             shezhi:{path:"/shezhi",url:"./shezhi"},
         },
     },

@@ -2,7 +2,7 @@ import {Head,Foot} from "./Head_Foot";
 import React,{Component} from 'react';
 import {BodyTitle,Welcome} from './home';
 import config from "../config";
-import  "./token.css";
+import  "./admin.css";
 import app from "./app1";
 //  let contractarry=app.contractarry(config.contracts);
 let contract1=config.contracts[0].abi;

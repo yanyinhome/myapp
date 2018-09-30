@@ -16,8 +16,8 @@ const jiaoyi=Loadable({
 const rizhi=Loadable({
         loader:()=> import('./rizhi'),
         loading:Loading}); 
-const token=Loadable({
-        loader:()=> import('./token'),
+const admin=Loadable({
+        loader:()=> import('./admin'),
         loading:Loading}); 
 const shezhi=Loadable({
         loader:()=> import('./shezhi'),
@@ -31,7 +31,7 @@ class RouteMap extends Component{
                     <Route  path={Config.routerconfig.pathconfig.qukuai.path} component={qukuai}/>
                     <Route  path={Config.routerconfig.pathconfig.jiaoyi.path} component={jiaoyi}/>
                     <Route  path={Config.routerconfig.pathconfig.rizhi.path} component={rizhi}/>
-                    <Route  path={Config.routerconfig.pathconfig.token.path} component={token}/>
+                    <Route  path={Config.routerconfig.pathconfig.admin.path} component={admin}/>
                     <Route  path={Config.routerconfig.pathconfig.shezhi.path} component={shezhi}/>
                 </Switch>
             </Router>
