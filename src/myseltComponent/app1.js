@@ -1,7 +1,5 @@
 import Web3  from "web3";
-// import { config } from "../config"
-// import contract from "truffle-contract";
-// import { callbackify } from "util";
+// 无法引入配置文件，会形成相互调用
 var web3;
 //创建web3对象
 if (typeof web3 !== 'undefined') {
@@ -13,13 +11,11 @@ if (typeof web3 !== 'undefined') {
 // var web3 = new web3();
 // 连接到以太坊节点
 // web3.setProvider(new web3.providers.HttpProvider("http://192.168.124.2:8486"));
-// 测试WEB3是否引入
-// var ab=web3.eth.getAccounts((err)=>{if(err){console.log(err)}})
-console.log(web3.eth);
 let version=web3.version;
 const app={
   web3:web3,
   version:version,
+  // myconstract:myconstract,
   // 生成合约实例数组函数
   contractarry:(arry)=>{return arry.map((item)=>{return app.contractAtAddress(item.abi,item.address)})},
   // 显示内容，便于测试

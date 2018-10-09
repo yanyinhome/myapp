@@ -3,7 +3,8 @@ import React,{Component} from 'react';
 import './bodycontent.css';
 import './home.css';
 import config from "../config";
-import{Button,Icon,Tag,Table,Tabs,Pagination} from "element-react";
+import{Button,Tag,Table,Tabs,Pagination,Form,Input,Select,Switch} from "element-react";
+import "element-theme-default";
 import app from './app1';
 // import "element-them-default";
 // 账户列表的标题，显示节点信息
@@ -43,7 +44,7 @@ class TableList extends Component{
           columns={this.props.columns}
           data={this.props.data}
           border={true}
-          height={440}
+          height={this.props.height}
           highlightCurrentRow={true}
           onCurrentChange={item=>{console.log(item)}}
           stripe={true}
@@ -52,20 +53,96 @@ class TableList extends Component{
     }
     
 }
+// 以太币交易组件
+// 购买以太币
+class ETHbuy extends Component{
+    constructor(props) {
+        super(props);
+      
+        this.state = {
+          form: {
+            name: '',
+            region: '',
+            date1: null,
+            date2: null,
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: ''
+          }
+        };
+      }
+      
+      onSubmit(e) {
+        e.preventDefault();
+      }
+      
+      onChange(key, value) {
+        this.setState({form:{key:value}});
+        // this.state.form[key] = value;
+        this.forceUpdate();
+      }
+      
+      render() {
+        return (
+          <Form model={this.state.form} labelWidth="80" onSubmit={this.onSubmit.bind(this)}>
+            <Form.Item>
+                <Tag type="primary">
+                以太币当前价格
+                </Tag>                
+            </Form.Item>
+            <Form.Item label="购买/出售">
+              <Select size="small" value={this.state.form.region} placeholder="请选择交易类型">
+                <Select.Option label="购买" value="shanghai" ></Select.Option>
+                <Select.Option label="出售" value="beijing"></Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="数量">
+              <div style={{width:"300px"}}>
+              <Input size="small" value={this.state.form.name} onChange={this.onChange.bind(this, 'name')}></Input>
+              </div>
+            </Form.Item>
+            <Form.Item label="支付金额">
+              <div style={{width:"300px"}}>
+              <Input size="small" value={this.state.form.name} onChange={this.onChange.bind(this, 'name')}></Input>
+              </div>
+            </Form.Item>
+            <Form.Item label="支付方式">
+              <Select size="small" value={this.state.form.region} placeholder="请选择支付方式">
+                <Select.Option label="微信" value="shanghai"></Select.Option>
+                <Select.Option label="支付宝" value="beijing"></Select.Option>
+              </Select>
+            </Form.Item>
+            <Form.Item label="显示密码">
+                <Switch
+                value={false}
+                onColor="#ff4949"
+                offColor="#20A0FF">
+            </Switch>
+            </Form.Item>
+            <Form.Item>
+              <Button size="small" type="primary" nativeType="submit">立即购买</Button>
+              <Button size="small">取消</Button>
+            </Form.Item>
+          </Form>
+        )
+      }
+      
+}
 // element tabs组件
 class Tabslist extends Component{
     render() {
         return (
-          <Tabs activeName="2" onTabClick={ (tab) => console.log(tab.props.name) }>
+          <Tabs activeName="1" onTabClick={ (tab) => console.log(tab.props.name) }>
             <Tabs.Pane label="查看账户" name="1">
             <TableList data={this.props.data} columns={this.props.columns}/>
             </Tabs.Pane>
             <Tabs.Pane label="查看区块" name="2">
-            <TableList data={this.props.data_qukuai} columns={this.props.columns_qukuai}/>
+            <TableList data={this.props.data_qukuai} columns={this.props.columns_qukuai} height={550}/>
             <Fenye/>
             </Tabs.Pane>
             <Tabs.Pane label="以太币交易" name="3">
-            以太币交易
+            <ETHbuy/>
             </Tabs.Pane>
           </Tabs>
         )
@@ -75,9 +152,9 @@ class Tabslist extends Component{
 class Fenye extends Component{
     render() {
         return (
-          <div className="last">
-            <div className="block">
-              <Pagination layout="total, sizes, prev, pager, next, jumper" total={400} pageSizes={[100, 200, 300, 400]} pageSize={100} currentPage={5}/>
+          <div className="last" style={{float:"right",marginTop:10}}>
+            <div className="block ">
+              <Pagination layout="prev, pager, next, jumper" total={4000} pageSize={50} currentPage={1} onCurrentChange={size=>console.log(size)}/>
             </div>
           </div>
         )
@@ -97,23 +174,23 @@ class BodyContent extends Component{
     }
 }
 // 账户列表底部，接收父组件从数据库获得的信息并显示
-class BodyFoot extends Component{
-    render(){
-        let itemlist=this.props.accountarry.map(item=>(<tr key={item.id}><td>{item.accountaddress}</td><td>{item.accountnumber}</td><td>{item.lockd.toString()}</td></tr>))
-        return(
-            <div className="accounts">
-                <table>
-                    <thead>
-                        <tr><th>账户地址</th><th>代币数</th><th>解锁</th></tr>
-                    </thead>
-                    <tbody>
-                        {itemlist}
-                    </tbody>
-                </table>
-            </div>
-        )
-    }
-}
+// class BodyFoot extends Component{
+//     render(){
+//         let itemlist=this.props.accountarry.map(item=>(<tr key={item.id}><td>{item.accountaddress}</td><td>{item.accountnumber}</td><td>{item.lockd.toString()}</td></tr>))
+//         return(
+//             <div className="accounts">
+//                 <table>
+//                     <thead>
+//                         <tr><th>账户地址</th><th>代币数</th><th>解锁</th></tr>
+//                     </thead>
+//                     <tbody>
+//                         {itemlist}
+//                     </tbody>
+//                 </table>
+//             </div>
+//         )
+//     }
+// }
 
 // 组件叠放，对外输出，从数据库获取信息并传递给子组件
 class Homebody extends Component{
@@ -173,7 +250,13 @@ class Homebody extends Component{
                   prop: "number",
                   width: "400rem",
                   align:"center",
-                 
+                    render:function(data){
+                        return(
+                            <span>
+                            <Tag type="primary">{data.number}</Tag>
+                            </span>
+                        )
+                    }
                 },
                 {
                   label: "锁定/解锁",
@@ -213,7 +296,7 @@ class Homebody extends Component{
         }
     componentDidMount(){
         this.timer=setInterval(
-            ()=>this.tick(),2000
+            ()=>this.tick(),30000
         )
     }
     componentWillUnmount(){
