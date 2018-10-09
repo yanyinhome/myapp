@@ -83,6 +83,8 @@ const Config={
             qukuai:{path:"/qukuai",url:"./qukuai"},//可以添加正则
             admin:{path:"/admin",url:"./admin"},
             shezhi:{path:"/shezhi",url:"./shezhi"},
+            register:{path:"/register",url:"./register"},
+            load:{path:"/load",url:"./load"}
         },
     },
     // 账户列表

@@ -21,7 +21,13 @@ const admin=Loadable({
         loading:Loading}); 
 const shezhi=Loadable({
         loader:()=> import('./shezhi'),
-        loading:Loading}); 
+        loading:Loading});
+const register=Loadable({
+        loader:()=>import("./register"),
+        loading:Loading});
+const load=Loadable({
+        loader:()=>import("./load"),
+        loading:Loading});        
 class RouteMap extends Component{
     render(){
         return(
@@ -33,6 +39,8 @@ class RouteMap extends Component{
                     <Route  path={Config.routerconfig.pathconfig.rizhi.path} component={rizhi}/>
                     <Route  path={Config.routerconfig.pathconfig.admin.path} component={admin}/>
                     <Route  path={Config.routerconfig.pathconfig.shezhi.path} component={shezhi}/>
+                    <Route  path={Config.routerconfig.pathconfig.register.path} component={register}/>
+                    <Route  path={Config.routerconfig.pathconfig.load.path} component={load}/>
                 </Switch>
             </Router>
         )

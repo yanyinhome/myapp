@@ -21,7 +21,7 @@ class SearchInput extends Component{
 class  Loadroute extends Component{
     render(){
         return(
-            <li className="register"><a>登录</a></li>
+            <li className="register"><Link to={Config.routerconfig.pathconfig.load.url}>登录</Link></li>
         )
     }
 }
@@ -29,7 +29,7 @@ class  Loadroute extends Component{
 class  Loginroute extends Component{
     render(){
         return(
-            <li className="register"><a>注册</a></li>
+            <li className="register"><Link to={Config.routerconfig.pathconfig.register.url}>注册</Link></li>
         )
     }
 }
