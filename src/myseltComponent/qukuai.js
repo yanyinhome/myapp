@@ -16,7 +16,7 @@ const myconstract=app.web3.eth.contract(contract1).at(address1);
 class TokenTransaction extends Component{
     render() {
         return (
-          <Tabs activeName="3" onTabClick={ (tab) => console.log(tab.props.name) }>
+          <Tabs activeName="1" onTabClick={ (tab) => console.log(tab.props.name) }>
             <Tabs.Pane label="账户列表" name="1">
             <TableList data={this.props.data} columns={this.props.columns}/>
             </Tabs.Pane>
@@ -315,11 +315,14 @@ class HuijinTransction extends Component{
             let addressOut=this.state.form.addressOut?this.state.form.addressOut:app.web3.eth.accounts[0];
             let password=this.state.form.password;
             let num=parseInt(val,10);//换算成wei，输入值为ether
-            app.web3.personal.unlockAccount(addressOut,password,3000)
-            myconstract.transfer.sendTransaction(addressIn,num,{from:addressOut},(err,result)=>{
-              if(err){console.log(err)}
-                else{console.log(result)}
-            })	 
+            if(app.web3.personal.unlockAccount(addressOut,password,3000)){
+              myconstract.transfer.sendTransaction(addressIn,num,{from:addressOut},(err,result)=>{
+                if(err){console.log(err)}
+                  else{console.log(result)}
+              })
+            }else{
+              alert("密码不正确")
+            } 
           } else {
             console.log('error submit!!');
             return false;

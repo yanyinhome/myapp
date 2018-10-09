@@ -1,13 +1,13 @@
 import {Head,Foot} from "./Head_Foot";
 import React,{Component} from 'react';
 import './bodycontent.css';
-import {BodyTitle,Welcome} from './home';
+import {BodyTitle} from './home';
 import config from '../config';
 import './jiaoyi.css';
 import app from './app1';
 import "element-theme-default";
 import {myconstract} from "./qukuai";
-import{Button,Tag,Table,Tabs,Form,Input,Select,Switch} from "element-react";
+import{Button,Tag,Form,Input,Select,Switch} from "element-react";
 // HEAD组件
 console.log(myconstract)
 

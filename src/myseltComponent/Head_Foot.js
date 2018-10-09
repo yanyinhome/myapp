@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom';
 import logo from '../img/logo.png';
 import set from '../img/set.png';
 import Config from '../config';
-import{Input,Select,Button} from "element-react";
+import{Input,Button} from "element-react";
 import "element-theme-default";
 import {Itemlist} from "./publicConponent";
 // 搜索框
