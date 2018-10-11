@@ -3,6 +3,8 @@ import './bodycontent.css';
 import{Head,Foot} from "./Head_Foot";
 import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
+import queryString from 'query-string';
+import 'whatwg-fetch';
 // 注册组件
 class Register extends Component{
     constructor(props){
@@ -21,7 +23,6 @@ class Register extends Component{
                     trigger:"blur",
                 },{
                     validator:(rule, value, callback)=>{
-                        console.log("1")
                 },trigger:"blur"
                 }],
                 emailaddress:[{
@@ -37,7 +38,6 @@ class Register extends Component{
                     trigger:"blur",
                 },{
                     validator: (rule, value, callback) => {
-                        console.log("1")
                         if (value === '') {
                           callback(new Error('请输入密码'));
                          } 
@@ -68,7 +68,11 @@ class Register extends Component{
     }
     handleSubmit=(e)=>{
         e.preventDefault();
-        console.log("1")
+        console.log(this.state.form);
+        fetch("http://localhost:3005/register/",{method:"POST",headers:{'Content-Type': 'application/json'},body:JSON.stringify(this.state.form)}).then(
+            res=>{console.log(1)},err=>{console.log(err)}
+        )
+        // fetch("http://localhost:3005/register/children",{method:"GET"}).then(res=>{console.log(res.text())})
     }
     handleReset=(e)=>{
         e.preventDefault();
