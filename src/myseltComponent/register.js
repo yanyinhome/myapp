@@ -3,8 +3,9 @@ import './bodycontent.css';
 import{Head,Foot} from "./Head_Foot";
 import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
-import queryString from 'query-string';
+import axios from "axios";
 import 'whatwg-fetch';
+import Axios from 'axios';
 // 注册组件
 class Register extends Component{
     constructor(props){
@@ -66,17 +67,39 @@ class Register extends Component{
             }
         }
     }
+    // axiospost 函数
+    axiospost=(option)=>{
+        let self=this;      
+        axios.post(option.url,option.data).then(function(response) {
+            if(response){
+                if(response.data=="ture"){
+                    alert("注册成功")
+                }
+                self.toRedirect()
+            }
+        }).catch(error => console.error('Error:', error))
+    }
     handleSubmit=(e)=>{
         e.preventDefault();
-        console.log(this.state.form);
-        fetch("http://localhost:3005/register/",{method:"POST",headers:{'Content-Type': 'application/json'},body:JSON.stringify(this.state.form)}).then(
-            res=>{console.log(1)},err=>{console.log(err)}
-        )
-        // fetch("http://localhost:3005/register/children",{method:"GET"}).then(res=>{console.log(res.text())})
+        const option={
+            url:"http://localhost:3005/register",
+            data:this.state.form,
+        }
+        const option1={
+            url:"http://192.168.124.5:8080/api/login",
+            data:{username:"hj",password:"123456"}, 
+        }
+        this.axiospost(option);
+        // this.axiospost(option1);
+    }
+    // 重定向
+    toRedirect = () => {
+        console.log(this.props.match.url)
+        // this.props.history.push(`${this.props.match.url.replace(/\/[^/]+$/, '')}`)
     }
     handleReset=(e)=>{
         e.preventDefault();
-        // this.refs.form.resetFields();
+        this.refs.form.resetFields();
         console.log(1)
     }
     onChange(key,value){

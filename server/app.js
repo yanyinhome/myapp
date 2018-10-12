@@ -7,18 +7,20 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let register=require('./routes/register');
-
+var bodyParser = require("body-parser");
 var app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 // 解决跨域问题
-app.all('*', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-  // res.header("Access-Control-Allow-Headers", 'Content-Type');
-  res.header("Access-Control-Allow-Methods","POST,GET,DELETE,OPTIONS");
-  // res.header("X-Powered-By",' 3.2.1')
-  // res.header("Content-Type", "application/json");
-  next();
-});
+// app.all('*', function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "X-Requested-With");
+//   // res.header("Access-Control-Allow-Headers", 'Content-Type');
+//   res.header("Access-Control-Allow-Methods","POST,GET,DELETE,OPTIONS");
+//   res.header("X-Powered-By",' 3.2.1')
+//   res.header("Content-Type", "application/json");
+//   next();
+// });
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
