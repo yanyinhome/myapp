@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+// var mysql=require("mysql-promise")()
 // 解决跨域问题
 router.use(require('cors')());
 // 引入数据库
@@ -16,9 +17,16 @@ const client=mysql.createConnection(hjznconfig);
 function mysqlsave(query,res){
   
 }
+client.connect((err)=>{
+  if(err){
+    console.log(err);
+  }else{
+    console.log(client)
+  }
+});
 /* GET users listing. */
 router.post('/', function(req, res, next) {
-  console.log(req.body.telnumber);
+  // console.log(req.body.telnumber);
   let query='INSERT INTO message(telnumber,password) VALUES (?,?)';
   let addparams=[];
   for(item in req.body){
@@ -27,15 +35,17 @@ router.post('/', function(req, res, next) {
       addparams.push(req.body[item])
     }
   }
-  client.connect();
-  client.query(query,addparams,function(err,result){
-    if(result){
+  if(addparams.length!=0){
+    client.query(query,addparams,function(err,result){
+    if(err){
+      console.log(err)     
+    }else{
       console.log(result)
       res.json("ture");
     }
-    client.end();
-  })
-  
+    // client.end();
+  })  
+  }
 });
 // register 下级文件
 router.get('/children', function(req, res, next) {

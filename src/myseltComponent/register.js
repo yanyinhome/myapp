@@ -4,8 +4,6 @@ import{Head,Foot} from "./Head_Foot";
 import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
 import axios from "axios";
-import 'whatwg-fetch';
-import Axios from 'axios';
 // 注册组件
 class Register extends Component{
     constructor(props){
@@ -21,10 +19,15 @@ class Register extends Component{
                 telnumber:[{
                     required:"ture",
                     message:"手机号不能为空",
-                    trigger:"blur",
                 },{
                     validator:(rule, value, callback)=>{
-                },trigger:"blur"
+                        let number=/^13[0-9]{9}$/;
+                        if(!number.test(value)){
+                            callback(new Error("请输入正确格式的电话号码"))
+                        }else{
+                            callback()
+                        }
+                }
                 }],
                 emailaddress:[{
                     required:"ture",
@@ -38,16 +41,14 @@ class Register extends Component{
                     message:"密码不能为空",
                     trigger:"blur",
                 },{
-                    validator: (rule, value, callback) => {
-                        if (value === '') {
-                          callback(new Error('请输入密码'));
-                         } 
-                         else {
-                          if (this.state.form.check !=='') {
-                            // this.refs.form.validateField('checkPass');
-                          }
+                    validator:(rule, value, callback)=>{
+                        let number=/^[0-9]{8}$/;
+                        if(!number.test(value)){
+                            callback(new Error("密码为8位数字"))
+                        }else{
+                            callback()
                         }
-                      },trigger:"blur"
+                },trigger:"blur"
                 }],
                 check:[{
                     required:"ture",
@@ -69,15 +70,16 @@ class Register extends Component{
     }
     // axiospost 函数
     axiospost=(option)=>{
-        let self=this;      
+        const self=this; 
         axios.post(option.url,option.data).then(function(response) {
             if(response){
-                if(response.data=="ture"){
-                    alert("注册成功")
-                }
-                self.toRedirect()
+                if(response.data==="ture"){
+                    alert("注册成功"); 
+                    self.props.history.push("/");                
+                }                
+                
             }
-        }).catch(error => console.error('Error:', error))
+        }).catch(error => console.error('Error:', error));
     }
     handleSubmit=(e)=>{
         e.preventDefault();
@@ -85,17 +87,8 @@ class Register extends Component{
             url:"http://localhost:3005/register",
             data:this.state.form,
         }
-        const option1={
-            url:"http://192.168.124.5:8080/api/login",
-            data:{username:"hj",password:"123456"}, 
-        }
         this.axiospost(option);
         // this.axiospost(option1);
-    }
-    // 重定向
-    toRedirect = () => {
-        console.log(this.props.match.url)
-        // this.props.history.push(`${this.props.match.url.replace(/\/[^/]+$/, '')}`)
     }
     handleReset=(e)=>{
         e.preventDefault();
@@ -111,17 +104,17 @@ class Register extends Component{
         return(
             <div className="container register">
                 <h1>欢迎注册</h1>
-                <Tabs activeName="1" onTabClick={ (tab) => console.log(tab.props.name) }>
+                <Tabs activeName="1" onTabClick={ (tab) => console.log(tab)} {...this.props}>
                     <Tabs.Pane label="手机注册" name="1">
                         <Form ref="form" rules={this.state.rules} labelPosition="top" model={this.state.form} labelWidth="80" >
                         <Form.Item label="手机号码" prop="telnumber">
-                        <Input value={this.state.form.telnumber} onChange={this.onChange.bind(this,'telnumber')} autoComplete="off" />
+                        <Input value={this.state.form.telnumber} onChange={this.onChange.bind(this,'telnumber')} autoComplete="off" placeholder="请输入11位电话号码" />
                         </Form.Item>
                         <Form.Item label="登录密码" prop="pass"> 
-                        <Input type="password" value={this.state.form.pass} onChange={this.onChange.bind(this,'pass')} autoComplete="off" />
+                        <Input type="password" value={this.state.form.pass} onChange={this.onChange.bind(this,'pass')} autoComplete="off" placeholder="请输入8位数字密码" />
                         </Form.Item>
                         <Form.Item label="确认密码" prop="check">
-                        <Input type="password" value={this.state.form.check} onChange={this.onChange.bind(this,'check')} autoComplete="off" />
+                        <Input type="password" value={this.state.form.check} onChange={this.onChange.bind(this,'check')} autoComplete="off" placeholder="请再次输入密码"/>
                         </Form.Item>
                         <Button type="primary" onClick={this.handleSubmit}>提交</Button>
                         <Button  onClick={this.handleReset}>重置</Button>
@@ -148,16 +141,23 @@ class Register extends Component{
         )
     }
 }
+// withRouter(Register);
 // 注册导出组件
-class RegisterExoort extends Component {
+class RegisterExport extends Component {
+    changeroute(){
+        console.log(this)
+        this.props.history.push("/qukuai");
+    }
     render(){
+        console.log(this)
         return(
             <div>
                 <Head/>
-                <Register/>
+                <Register changeroute={this.changeroute} history={this.props.history}/>
                 <Foot/>
             </div>
         )
     }
 }
-export default RegisterExoort;
+export default RegisterExport;
+// export default withRouter(RegisterExport);
