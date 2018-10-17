@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
-// var mysql=require("mysql-promise")()
+var Web3=require("web3");
+var web3;
+//创建web3对象
+if (typeof web3 !== 'undefined') {
+   web3 = new Web3(web3.currentProvider);
+} else {
+  // set the provider you want from Web3.providers
+   web3 = new Web3(new Web3.providers.HttpProvider("http://192.168.124.2:8486"));
+};
 // 解决跨域问题
 router.use(require('cors')());
 // 引入数据库
@@ -14,28 +22,26 @@ const hjznconfig={
 }
 // 创建客户端
 const client=mysql.createConnection(hjznconfig);
-function mysqlsave(query,res){
-  
-}
-client.connect((err)=>{
+client.connect((err,result)=>{
   if(err){
     console.log(err);
   }else{
-    console.log(client)
+    console.log(result)
   }
 });
 /* GET users listing. */
 router.post('/', function(req, res, next) {
   // console.log(req.body.telnumber);
-  let query='INSERT INTO message(telnumber,password) VALUES (?,?)';
+  let query='INSERT INTO message(telnumber,password,email) VALUES (?,?,?)';
   let addparams=[];
-  for(item in req.body){
-    if(item=="telnumber"||item=="pass"){
-      console.log(item,req.body[item])
-      addparams.push(req.body[item])
+  const data=req.body;
+  for(let item in data){    
+    if(item!=="check"){
+      console.log(item,data[item])
+      addparams.push(data[item])
     }
   }
-  if(addparams.length!=0){
+  if(addparams.length!==0){
     client.query(query,addparams,function(err,result){
     if(err){
       console.log(err)     
@@ -49,8 +55,14 @@ router.post('/', function(req, res, next) {
 });
 // register 下级文件
 router.get('/children', function(req, res, next) {
-  console.log(req.body) 
-  res.send('下级文件');
+  // let result=web3.personal.newAccount("123456");
+  console.log(req.cookies)
+  res.cookie("sessionid",1);
+  if(req.cookies&&req.cookies.sessionid){
+    res.send("你已经登录")
+  }else{
+    res.send("你还未登录，请登录")
+  }
 });
 router.post('/children', function(req, res, next) {
   console.log(req.body) 

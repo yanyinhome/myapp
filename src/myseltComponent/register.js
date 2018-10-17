@@ -4,11 +4,13 @@ import{Head,Foot} from "./Head_Foot";
 import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
 import axios from "axios";
+import { usercontext } from './context';
 // 注册组件
 class Register extends Component{
     constructor(props){
         super(props);
         this.state={
+            tabid:1,
             form:{
                 telnumber:"",
                 pass:"",
@@ -27,6 +29,7 @@ class Register extends Component{
                         }else{
                             callback()
                         }
+                        callback()
                 }
                 }],
                 emailaddress:[{
@@ -34,7 +37,15 @@ class Register extends Component{
                     message:"邮箱不能为空",
                     trigger:"blur",
                 },{
-
+                    validator:(rule, value, callback)=>{
+                        let email=/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+                        if(!email.test(value)){
+                            callback(new Error("请输入正确格式的电话号码"))
+                        }else{
+                            callback()
+                        }
+                        callback();
+                }
                 }],
                 pass:[{
                     required:"ture",
@@ -47,7 +58,13 @@ class Register extends Component{
                             callback(new Error("密码为8位数字"))
                         }else{
                             callback()
+                            // if (this.state.form.check !== '') {
+                            //     console.log(this.state.tabid)
+                            //     // this.refs.form_tel.validateField('check');
+                            //     // this.refs.form_mail.validateField('check');
+                            //   }
                         }
+                        callback();
                 },trigger:"blur"
                 }],
                 check:[{
@@ -92,8 +109,13 @@ class Register extends Component{
     }
     handleReset=(e)=>{
         e.preventDefault();
-        this.refs.form.resetFields();
-        console.log(1)
+        const form =this.state.form;
+        for(let item in form){
+            form[item]=""
+        }
+        this.setState(form)
+        this.refs.form_tel.resetFields();
+        this.refs.form_mail.resetFields();
     }
     onChange(key,value){
         this.setState({
@@ -103,10 +125,10 @@ class Register extends Component{
     render(){
         return(
             <div className="container register">
-                <h1>欢迎注册</h1>
-                <Tabs activeName="1" onTabClick={ (tab) => console.log(tab)} {...this.props}>
+                <h2>欢迎注册</h2>
+                <Tabs activeName="1" onTabClick={ (tab) => {this.setState({tabid:tab.props.name})}} {...this.props}>
                     <Tabs.Pane label="手机注册" name="1">
-                        <Form ref="form" rules={this.state.rules} labelPosition="top" model={this.state.form} labelWidth="80" >
+                        <Form ref="form_tel" rules={this.state.rules} labelPosition="top" model={this.state.form} labelWidth="80" >
                         <Form.Item label="手机号码" prop="telnumber">
                         <Input value={this.state.form.telnumber} onChange={this.onChange.bind(this,'telnumber')} autoComplete="off" placeholder="请输入11位电话号码" />
                         </Form.Item>
@@ -121,22 +143,21 @@ class Register extends Component{
                         </Form>
                     </Tabs.Pane>
                     <Tabs.Pane label="邮箱注册" name="2">
-                    <Form ref="form" rules={this.state.rules} model={this.state.form} labelPosition="top" labelWidth="80" >
+                    <Form ref="form_mail" rules={this.state.rules} model={this.state.form} labelPosition="top" labelWidth="80" >
                         <Form.Item label="邮箱地址" prop="emailaddress">
-                        <Input value={this.state.form.telnumber} onChange={this.onChange.bind(this,'emailaddress')} autoComplete="off" />
+                        <Input value={this.state.form.emailaddress} onChange={this.onChange.bind(this,'emailaddress')} autoComplete="off" placeholder="请输入正确的邮箱地址"/>
                         </Form.Item>
                         <Form.Item label="登录密码" prop="pass"> 
-                        <Input type="password" value={this.state.form.pass} onChange={this.onChange.bind(this,'pass')} autoComplete="off" />
+                        <Input type="password" value={this.state.form.pass} onChange={this.onChange.bind(this,'pass')} autoComplete="off" placeholder="请输入8位数字密码"/>
                         </Form.Item>
                         <Form.Item label="确认密码" prop="check">
-                        <Input type="password" value={this.state.form.check} onChange={this.onChange.bind(this,'check')} autoComplete="off" />
+                        <Input type="password" value={this.state.form.check} onChange={this.onChange.bind(this,'check')} autoComplete="off" placeholder="请再次输入密码"/>
                         </Form.Item>
                         <Button type="primary" onClick={this.handleSubmit}>提交</Button>
                         <Button  onClick={this.handleReset}>重置</Button>
                         </Form>
                     </Tabs.Pane>
-                </Tabs>
-                
+                </Tabs>                
             </div>
         )
     }
@@ -149,10 +170,12 @@ class RegisterExport extends Component {
         this.props.history.push("/qukuai");
     }
     render(){
-        console.log(this)
+        console.log(document.cookie)
         return(
             <div>
-                <Head/>
+                <usercontext.Consumer>
+                    {data=><Head loadstate={data.username}/>}
+                </usercontext.Consumer>
                 <Register changeroute={this.changeroute} history={this.props.history}/>
                 <Foot/>
             </div>
