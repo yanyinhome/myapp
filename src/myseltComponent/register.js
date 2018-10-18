@@ -3,8 +3,8 @@ import './bodycontent.css';
 import{Head,Foot} from "./Head_Foot";
 import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
-import axios from "axios";
 import { usercontext } from './context';
+import axios from "axios";
 axios.defaults.withCredentials = true;
 // 注册组件
 class Register extends Component{
@@ -93,7 +93,7 @@ class Register extends Component{
             if(response){
                 if(response.data==="ture"){
                     alert("注册成功"); 
-                    self.props.history.push("/");                
+                    self.props.history.push("/load");                
                 } else{
                     console.log(response)
                 }               
@@ -101,10 +101,11 @@ class Register extends Component{
             }
         }).catch(error => console.error('Error:', error));
     }
+    // 点击确定提交注册
     handleSubmit=(e)=>{
         e.preventDefault();
         const option={
-            url:"http://localhost:3005/register/children",
+            url:"http://localhost:3005/register",
             data:this.state.form,
         }
         this.axiospost(option);
@@ -168,18 +169,14 @@ class Register extends Component{
 // withRouter(Register);
 // 注册导出组件
 class RegisterExport extends Component {
-    changeroute(){
-        console.log(this)
-        this.props.history.push("/qukuai");
-    }
-    render(){
+        render(){
         console.log(document.cookie)
         return(
             <div>
                 <usercontext.Consumer>
                     {data=><Head loadstate={data.username}/>}
                 </usercontext.Consumer>
-                <Register changeroute={this.changeroute} history={this.props.history}/>
+                <Register history={this.props.history}/>
                 <Foot/>
             </div>
         )

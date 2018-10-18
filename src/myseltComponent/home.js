@@ -6,6 +6,9 @@ import config from "../config";
 import{Button,Tag,Table,Tabs,Pagination,Form,Input,Select,Switch} from "element-react";
 import "element-theme-default";
 import app from './app1';
+import {usercontext} from "./context";
+import axios from "axios";
+axios.defaults.withCredentials = true;
 // import "element-them-default";
 // 账户列表的标题，显示节点信息
 class BodyTitle extends Component{
@@ -312,10 +315,35 @@ class Homebody extends Component{
     }
 }
 class Home extends  Component{
+    constructor(props){
+        super(props);
+        this.state={
+          userstate:{
+            username:"登录",
+            load:"false",
+        },
+        }
+      }
+      componentDidMount(){
+        const self=this;
+        const option={
+          url:"http://localhost:3005/register",
+        }
+        axios.get(option.url).then(function(response){
+          console.log(response)
+          if(response.data!==""){       
+            self.setState({userstate:{username:response.data}})
+          }
+        })
+      }
     render(){
         return(
             <div>
-                <Head/>
+                <usercontext.Provider value={this.state.userstate}>
+                 <usercontext.Consumer>
+                    {data=><Head loadstate={data.username}/>}
+                </usercontext.Consumer>
+                </usercontext.Provider>
                 <Homebody/>
                 <Foot/>
             </div>
