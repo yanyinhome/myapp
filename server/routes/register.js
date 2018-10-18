@@ -46,33 +46,33 @@ router.post('/children', function(req, res, next) {
     res.send("你还未登录，请登录")
   }
 });
-// router.get('/children', function(req, res, next) {
-//   console.log(req.body) 
-//   res.send('下级文件');
-// });
+router.get('/children', function(req, res, next) {
+  console.log(req.body) 
+  res.send('下级文件');
+});
 /* GET users listing. */
-// router.post('/', function(req, res, next) {
-//   // console.log(req.body.telnumber);
-//   let query='INSERT INTO message(telnumber,password,email) VALUES (?,?,?)';
-//   let addparams=[];
-//   const data=req.body;
-//   for(let item in data){    
-//     if(item!=="check"){
-//       console.log(item,data[item])
-//       addparams.push(data[item])
-//     }
-//   }
-//   if(addparams.length!==0){
-//     client.query(query,addparams,function(err,result){
-//     if(err){
-//       console.log(err)     
-//     }else{
-//       console.log(result)
-//       res.json("ture");
-//     }
-//     // client.end();
-//   })  
-//   }
-// });
+router.post('/', function(req, res, next) {
+  // console.log(req.body.telnumber);
+  let query='INSERT INTO message(telnumber,password,email) VALUES (?,?,?)';
+  let addparams=[];
+  const data=req.body;
+  for(let item in data){    
+    if(item!=="check"){
+      console.log(item,data[item])
+      addparams.push(data[item])
+    }
+  }
+  if(addparams.length!==0){
+    client.query(query,addparams,function(err,result){
+    if(err){
+      console.log(err)     
+    }else{
+      console.log(result)
+      res.json("ture");
+    }
+    // client.end();
+  })  
+  }
+});
 
 module.exports = router;
