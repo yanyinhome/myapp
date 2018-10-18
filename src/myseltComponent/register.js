@@ -5,6 +5,7 @@ import{Button,Tabs,Form,Input} from "element-react";
 import "element-theme-default";
 import axios from "axios";
 import { usercontext } from './context';
+axios.defaults.withCredentials = true;
 // 注册组件
 class Register extends Component{
     constructor(props){
@@ -93,7 +94,9 @@ class Register extends Component{
                 if(response.data==="ture"){
                     alert("注册成功"); 
                     self.props.history.push("/");                
-                }                
+                } else{
+                    console.log(response)
+                }               
                 
             }
         }).catch(error => console.error('Error:', error));
@@ -101,7 +104,7 @@ class Register extends Component{
     handleSubmit=(e)=>{
         e.preventDefault();
         const option={
-            url:"http://localhost:3005/register",
+            url:"http://localhost:3005/register/children",
             data:this.state.form,
         }
         this.axiospost(option);
