@@ -21,7 +21,7 @@ class SearchInput extends Component{
 class  Loadroute extends Component{
     render(){
         return(
-            <li className="register"><Link to={Config.routerconfig.pathconfig.load.url}>登录</Link></li>
+            <li className="register"><Link to={Config.routerconfig.pathconfig.load.url}>{this.props.loadstate}</Link></li>
         )
     }
 }
@@ -47,7 +47,7 @@ class Head extends  Component{
             <div className="top">
                 <div className="fr">
                <ul>
-               <Loadroute/>
+               <Loadroute loadstate={this.props.loadstate}/>
                 <Loginroute/>
                 <li>
                 <Link to={Config.routerconfig.pathconfig.shezhi.url}><img src={set} alt=""></img></Link>
